@@ -28,6 +28,10 @@ export const ContactItem = ({ contact }) => {
           </li>
         )}
       </ul>
+      <p>
+        <button className="btn btn-dark btn-sm">Edit</button>
+        <button className="btn btn-red btn-sm">Delete</button>
+      </p>
     </div>
   );
 };

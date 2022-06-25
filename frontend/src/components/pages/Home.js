@@ -1,7 +1,12 @@
+import Contacts from "../contacts/Contacts";
+// import ContactForm from "../contacts/ContactForm";
+
 const Home = () => {
   return (
     <div>
-      <h1>Address Book home page</h1>
+      <div>
+        <Contacts />
+      </div>
     </div>
   );
 };

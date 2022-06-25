@@ -4,16 +4,18 @@ import { Link } from "react-router-dom";
 
 const Navbar = ({ title, icon }) => {
   return (
-    <div className="navbar bg-primary">
-      <h1>
-        <i className={icon}>{title}</i>
-      </h1>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-        </li>
-      </ul>
+    <div className="bg-primary">
+      <div className="container navbar">
+        <h1>
+          <i className={icon}> {title}</i>
+        </h1>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+            <Link to="/about">About</Link>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };
@@ -24,7 +26,7 @@ Navbar.propTypes = {
 };
 
 Navbar.defaultProps = {
-  title: "Address Book",
+  title: "Address  Book",
   icon: "fa-solid fa-address-book",
 };
 

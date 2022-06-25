@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import ContactContext from "../../context/contact/contactContext";
 
 const initialContact = {
   name: "",
@@ -8,6 +9,9 @@ const initialContact = {
 };
 
 const ContactForm = () => {
+  // get access to methods and states from contactContext hook after importing it
+  const contactContext = useContext(ContactContext);
+
   const [contact, setContact] = useState(initialContact);
 
   const { name, email, phone, type } = contact;
@@ -15,8 +19,21 @@ const ContactForm = () => {
   const onChange = (e) =>
     setContact({ ...contact, [e.target.name]: e.target.value });
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    // add contact after passing state (form fields)
+    contactContext.addContact(contact);
+    // clear form after adding the contact
+    setContact({
+      name: "",
+      email: "",
+      phone: "",
+      type: "personal",
+    });
+  };
+
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <h2 className="text-primary">Add Contact</h2>
       <input
         type="text"
@@ -59,17 +76,13 @@ const ContactForm = () => {
       <div>
         <input
           type="submit"
-          value={current ? "Update Contact" : "Add Contact"}
+          value="Add Contact"
           className="btn btn-primary btn-block"
         />
       </div>
-      {current && (
-        <div>
-          <button className="btn btn-light btn-block" onClick={clearAll}>
-            Clear
-          </button>
-        </div>
-      )}
+      <div>
+        <button className="btn btn-light btn-block">Clear</button>
+      </div>
     </form>
   );
 };

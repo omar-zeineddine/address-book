@@ -2,18 +2,9 @@ import React, { useReducer, useContext } from "react";
 import axios from "axios";
 import ContactContext from "./contactContext";
 import contactReducer from "./contactReducer";
-import {
-  GET_CONTACTS,
-  ADD_CONTACT,
-  DELETE_CONTACT,
-  SET_CURRENT,
-  CLEAR_CURRENT,
-  UPDATE_CONTACT,
-  FILTER_CONTACTS,
-  CLEAR_CONTACTS,
-  CLEAR_FILTER,
-  CONTACT_ERROR,
-} from "../types";
+import { ADD_CONTACT } from "../types";
+
+import { v4 as uuidv4 } from "uuid";
 
 const ContactState = (props) => {
   const initialState = {
@@ -35,20 +26,15 @@ const ContactState = (props) => {
     ],
   };
 
-  // Get Contacts
-  // Add Contact
-  // Delete Contact
-  // Update Contact
-  // Clear Contacts
-  // Set Current Contact
-  // Clear Current Contact
-  // Filter Contacts
-  // Clear Filter
+  const addContact = (contact) => {
+    contact.id = uuidv4();
+    dispatch({ type: ADD_CONTACT, payload: contact });
+  };
 
   const [state, dispatch] = useReducer(contactReducer, initialState);
 
   return (
-    <ContactContext.Provider value={{ contacts: state.contacts }}>
+    <ContactContext.Provider value={{ contacts: state.contacts, addContact }}>
       {props.children}
     </ContactContext.Provider>
   );

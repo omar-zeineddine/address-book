@@ -1,17 +1,22 @@
-import { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import ContactContext from "../../context/contact/contactContext";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import {
+  useContacts,
+  deleteContact,
+  setCurrent,
+  clearCurrent,
+} from "../../context/contact/ContactState";
 
-export const ContactItem = ({ contact }) => {
-  const contactContext = useContext(ContactContext);
+const ContactItem = ({ contact }) => {
+  // contact dispatch without state
+  const contactDispatch = useContacts()[1];
 
-  const { deleteContact, setCurrent, clearCurrent } = contactContext;
-
-  const { id, name, email, phone, type } = contact;
+  const { _id, name, email, phone, type } = contact;
 
   const onDelete = () => {
-    deleteContact(id);
-    clearCurrent();
+    deleteContact(contactDispatch, _id);
+    clearCurrent(contactDispatch);
   };
 
   return (
@@ -40,14 +45,32 @@ export const ContactItem = ({ contact }) => {
           </li>
         )}
       </ul>
+      {/* test */}
+      {/* <p className="contactLocationTitle">Location</p>
+      <MapContainer
+        style={{ height: "100%", width: "100%" }}
+        center={[listing.geolocation.lat, listing.geolocation.lng]}
+        zoom={13}
+        scrollWheelZoom={false}
+      >
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png"
+        />
+
+        <Marker position={[listing.geolocation.lat, listing.geolocation.lng]}>
+          <Popup>{listing.location}</Popup>
+        </Marker>
+      </MapContainer> */}
+
       <p>
         <button
           className="btn btn-dark btn-sm"
-          onClick={() => setCurrent(contact)}
+          onClick={() => setCurrent(contactDispatch, contact)}
         >
           Edit
         </button>
-        <button className="btn btn-red btn-sm" onClick={onDelete}>
+        <button className="btn btn-danger btn-sm" onClick={onDelete}>
           Delete
         </button>
       </p>

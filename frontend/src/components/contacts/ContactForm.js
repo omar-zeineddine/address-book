@@ -1,33 +1,35 @@
-import React, { useState, useContext, useEffect } from "react";
-import ContactContext from "../../context/contact/contactContext";
+import React, { useState, useEffect } from "react";
+import {
+  addContact,
+  useContacts,
+  updateContact,
+  clearCurrent,
+} from "../../context/contact/ContactState";
 
 const initialContact = {
   name: "",
   email: "",
   phone: "",
   type: "personal",
+  // address: "",
+  latitude: 0,
+  longitude: 0,
 };
 
 const ContactForm = () => {
-  // get access to methods and states from contactContext hook after importing it
-  const contactContext = useContext(ContactContext);
+  const [contactState, contactDispatch] = useContacts();
 
-  const { addContact, updateContact, clearCurrent, current } = contactContext;
+  const { current } = contactState;
+
+  const [contact, setContact] = useState(initialContact);
 
   useEffect(() => {
     if (current !== null) {
       setContact(current);
     } else {
-      setContact({
-        name: "",
-        email: "",
-        phone: "",
-        type: "personal",
-      });
+      setContact(initialContact);
     }
-  }, [contactContext, current]);
-
-  const [contact, setContact] = useState(initialContact);
+  }, [current]);
 
   const { name, email, phone, type } = contact;
 
@@ -37,16 +39,17 @@ const ContactForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (current === null) {
-      // add contact after passing state (form fields)
-      addContact(contact);
+      addContact(contactDispatch, contact).then(() =>
+        setContact(initialContact)
+      );
     } else {
-      updateContact(contact);
+      updateContact(contactDispatch, contact);
     }
     clearAll();
   };
 
   const clearAll = () => {
-    clearCurrent();
+    clearCurrent(contactDispatch);
   };
 
   return (
@@ -75,7 +78,15 @@ const ContactForm = () => {
         value={phone}
         onChange={onChange}
       />
-      <h4>Contact Type</h4>
+      {/* <label className="formLabel">Address</label>
+      <textarea
+        className="formInputAddress"
+        type="text"
+        id="address"
+        value={address}
+        required
+      /> */}
+      <h5>Contact Type</h5>
       <input
         type="radio"
         name="type"

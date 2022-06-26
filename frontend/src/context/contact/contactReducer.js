@@ -4,6 +4,8 @@ import {
   UPDATE_CONTACT,
   SET_CURRENT,
   CLEAR_CURRENT,
+  FILTER_CONTACTS,
+  CLEAR_FILTER,
 } from "../types";
 
 export default (state, action) => {

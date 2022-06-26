@@ -8,9 +8,18 @@ import {
   CLEAR_CURRENT,
   DELETE_CONTACT,
   SET_CURRENT,
+  FILTER_CONTACTS,
+  CLEAR_FILTER,
 } from "../types";
 
 import { v4 as uuidv4 } from "uuid";
+
+// Create a custom hook to use the contact context
+
+export const useContacts = () => {
+  const { state, dispatch } = useContext(ContactContext);
+  return [state, dispatch];
+};
 
 const ContactState = (props) => {
   const initialState = {

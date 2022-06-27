@@ -16,6 +16,15 @@ const ContactSchema = mongoose.Schema({
   phone: {
     type: String,
   },
+  // add user's lat and long strings
+  lat: {
+    type: String,
+    default: "",
+  },
+  long: {
+    type: String,
+    default: "",
+  },
   type: {
     type: String,
     default: "personal",

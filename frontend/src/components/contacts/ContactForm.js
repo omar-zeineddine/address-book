@@ -10,10 +10,9 @@ const initialContact = {
   name: "",
   email: "",
   phone: "",
+  lat: "",
+  long: "",
   type: "personal",
-  // address: "",
-  latitude: 0,
-  longitude: 0,
 };
 
 const ContactForm = () => {
@@ -31,7 +30,7 @@ const ContactForm = () => {
     }
   }, [current]);
 
-  const { name, email, phone, type } = contact;
+  const { name, email, phone, lat, long, type } = contact;
 
   const onChange = (e) =>
     setContact({ ...contact, [e.target.name]: e.target.value });
@@ -76,6 +75,20 @@ const ContactForm = () => {
         placeholder="Phone"
         name="phone"
         value={phone}
+        onChange={onChange}
+      />
+      <input
+        type="text"
+        placeholder="Lat"
+        name="lat"
+        value={lat}
+        onChange={onChange}
+      />
+      <input
+        type="text"
+        placeholder="Long"
+        name="long"
+        value={long}
         onChange={onChange}
       />
       {/* <label className="formLabel">Address</label>

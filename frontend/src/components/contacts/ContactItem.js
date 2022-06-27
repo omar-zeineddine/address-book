@@ -12,7 +12,7 @@ const ContactItem = ({ contact }) => {
   // contact dispatch without state
   const contactDispatch = useContacts()[1];
 
-  const { _id, name, email, phone, type } = contact;
+  const { _id, name, email, phone, lat, long, type } = contact;
 
   const onDelete = () => {
     deleteContact(contactDispatch, _id);
@@ -42,6 +42,11 @@ const ContactItem = ({ contact }) => {
         {phone && (
           <li>
             <i className="fas fa-phone" /> {phone}
+          </li>
+        )}
+        {lat && long && (
+          <li>
+            <i className="fas fa-location" /> {lat}, {long}
           </li>
         )}
       </ul>

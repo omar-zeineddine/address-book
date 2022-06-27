@@ -8,7 +8,7 @@ const Navbar = ({ title, icon }) => {
   const [authState, authDispatch] = useAuth();
   const { isAuthenticated, user } = authState;
 
-  // contact dispatch without state
+  // contact dispatch without state.
   const contactDispatch = useContacts()[1];
 
   const onLogout = () => {
@@ -18,7 +18,6 @@ const Navbar = ({ title, icon }) => {
 
   const authLinks = (
     <Fragment>
-      {/* check if user exists and display name */}
       <li>Hello {user && user.name}</li>
       <li>
         <Link onClick={onLogout} to="/login">
@@ -41,13 +40,15 @@ const Navbar = ({ title, icon }) => {
   );
 
   return (
-    <div className="navbar bg-primary">
-      <h1>
-        <Link to="/">
-          <i className={icon} /> {title}
-        </Link>
-      </h1>
-      <ul>{isAuthenticated ? authLinks : guestLinks}</ul>
+    <div className="bg-primary">
+      <div className="container navbar">
+        <h1>
+          <Link to="/">
+            <i className={icon} /> {title}
+          </Link>
+        </h1>
+        <ul>{isAuthenticated ? authLinks : guestLinks}</ul>
+      </div>
     </div>
   );
 };

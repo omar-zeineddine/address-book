@@ -50,23 +50,25 @@ const ContactItem = ({ contact }) => {
           </li>
         )}
       </ul>
-      {/* test */}
-      {/* <p className="contactLocationTitle">Location</p>
-      <MapContainer
-        style={{ height: "100%", width: "100%" }}
-        center={[listing.geolocation.lat, listing.geolocation.lng]}
-        zoom={13}
-        scrollWheelZoom={false}
-      >
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png"
-        />
 
-        <Marker position={[listing.geolocation.lat, listing.geolocation.lng]}>
-          <Popup>{listing.location}</Popup>
-        </Marker>
-      </MapContainer> */}
+      {/* leaflet map: add lat and lon from contact fields */}
+      <p className="listingLocationTitle">Location</p>
+
+      <div className="leafletContainer">
+        <MapContainer
+          style={{ height: "100%", width: "100%" }}
+          center={[contact.lat, contact.long]}
+          zoom={13}
+          scrollWheelZoom={false}
+        >
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png"
+          />
+
+          <Marker position={[contact.lat, contact.long]}></Marker>
+        </MapContainer>
+      </div>
 
       <p>
         <button

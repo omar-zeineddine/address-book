@@ -1,27 +1,49 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment, useEffect } from "react";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import ContactItem from "./ContactItem";
-import ContactContext from "../../context/contact/contactContext";
+import Loading from "../layout/Loading";
+import { useContacts, getContacts } from "../../context/contact/ContactState";
 
 const Contacts = () => {
-  // initialize context, use context hook
-  const contactContext = useContext(ContactContext); // gives access to any action associated with the contact context
+  const [contactState, contactDispatch] = useContacts();
 
-  const { contacts, filtered } = contactContext;
+  const { contacts, filtered } = contactState;
 
-  if (contacts.length === 0) {
-    return <h5>please add a contact</h5>;
+  useEffect(() => {
+    getContacts(contactDispatch);
+  }, [contactDispatch]);
+
+  if (contacts !== null && contacts.length === 0) {
+    return <h4>Please add a contact</h4>;
   }
 
   return (
-    // if filtered is not null, map through and show contact item, else show contacts
     <Fragment>
-      {filtered !== null
-        ? filtered.map((contact) => (
-            <ContactItem key={contact.id} contact={contact} />
-          ))
-        : contacts.map((contact) => (
-            <ContactItem key={contact.id} contact={contact} />
-          ))}
+      {contacts !== null ? (
+        <TransitionGroup>
+          {filtered !== null
+            ? filtered.map((contact) => (
+                <CSSTransition
+                  key={contact._id}
+                  timeout={500}
+                  classNames="item"
+                >
+                  <ContactItem contact={contact} />
+                </CSSTransition>
+              ))
+            : contacts.map((contact) => (
+                <CSSTransition
+                  key={contact._id}
+                  timeout={500}
+                  classNames="item"
+                >
+                  <ContactItem contact={contact} />
+                </CSSTransition>
+              ))}
+        </TransitionGroup>
+      ) : (
+        <Loading />
+      )}
     </Fragment>
   );
 };
